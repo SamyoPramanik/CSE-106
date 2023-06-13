@@ -34,8 +34,10 @@ template <class x>
 void LL<x>::insert(int item)
 {
     if (used == capacity)
+    {
         ara = (int *)realloc(ara, 2 * capacity * sizeof(int));
-
+        capacity *= 2;
+    }
     for (int i = used + 1; i > cur; i--)
         ara[i] = ara[i - 1];
     ara[cur] = item;
@@ -90,9 +92,11 @@ void LL<x>::prev()
 template <class x>
 void LL<x>::next()
 {
+    if (cur == 0)
+        return;
     if (cur == used)
     {
-        cout << "Can't move left" << endl;
+        cout << "Can't move next" << endl;
         return;
     }
     cur++;

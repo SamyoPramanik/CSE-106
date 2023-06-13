@@ -29,7 +29,10 @@ void init(int x, int u = 0, int c = 0)
 void insert(int item)
 {
     if (used == capacity)
+    {
         ara = (int *)realloc(ara, 2 * capacity * sizeof(int));
+        capacity *= 2;
+    }
 
     for (int i = used + 1; i > cur; i--)
         ara[i] = ara[i - 1];

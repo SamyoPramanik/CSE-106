@@ -28,8 +28,11 @@ void init(int x, int u = 0, int c = 0)
 
 void insert(int item)
 {
-    if (used == capacity)
+    if (used >= capacity)
+    {
         ara = (int *)realloc(ara, 2 * capacity * sizeof(int));
+        capacity *= 2;
+    }
 
     for (int i = used + 1; i > cur; i--)
         ara[i] = ara[i - 1];
@@ -65,7 +68,11 @@ void moveToStart()
 
 void moveToEnd()
 {
-    cur = used - 1;
+    if (used <= 0)
+        cur = 0;
+
+    else
+        cur = used - 1;
 }
 
 void prev()
@@ -82,7 +89,7 @@ void next()
 {
     if (cur == used)
     {
-        cout << "Can't move left" << endl;
+        cout << "Can't move right" << endl;
         return;
     }
     cur++;

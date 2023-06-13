@@ -176,6 +176,8 @@ void LL<x>::moveToPos(int pos)
 template <class x>
 void LL<x>::next()
 {
+    if (cnt == 0)
+        return;
     if (cur == NULL)
     {
         cout << "Already in last position\n";
