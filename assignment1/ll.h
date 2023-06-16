@@ -146,10 +146,12 @@ int LL<x>::currPos()
 template <class x>
 x LL<x>::getValue()
 {
+    if (cur == NULL)
+        return -1;
     if (cnt <= 0)
     {
         cerr << "List is empty\n";
-        exit(1);
+        return -1;
     }
     return cur->val;
 }

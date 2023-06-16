@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-#include "arr.h"
+#include "ll.h"
 using namespace std;
 
 int main()
@@ -21,8 +21,8 @@ int main()
 
     while (1)
     {
-        int in;
-        cin >> in;
+        int in, num;
+        cin >> in >> num;
         if (in == 0)
             break;
 
@@ -30,9 +30,7 @@ int main()
         {
         case 1:
         {
-            int a;
-            cin >> a;
-            list.insert(a);
+            list.insert(num);
             list.print();
             break;
         }
@@ -84,9 +82,7 @@ int main()
         }
         case 9:
         {
-            int pos;
-            cin >> pos;
-            list.moveToPos(pos);
+            list.moveToPos(num);
             list.print();
             break;
         }

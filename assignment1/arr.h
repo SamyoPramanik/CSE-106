@@ -75,6 +75,11 @@ void LL<x>::moveToStart()
 template <class x>
 void LL<x>::moveToEnd()
 {
+    if (used == 0)
+    {
+        cur = 0;
+        return;
+    }
     cur = used - 1;
 }
 
@@ -128,6 +133,8 @@ void LL<x>::moveToPos(int pos)
 template <class x>
 x LL<x>::getValue()
 {
+    if (cur >= used)
+        return -1;
     return ara[cur];
 }
 
