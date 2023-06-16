@@ -128,7 +128,7 @@ void LL<x>::moveToEnd()
     if (cnt == 0)
         return;
 
-    moveToPos(cnt);
+    moveToPos(cnt - 1);
 }
 
 template <class x>

@@ -97,8 +97,8 @@ void LL<x>::prev()
 template <class x>
 void LL<x>::next()
 {
-    // if (cur == 0)
-    //     return;
+    if (cur == 0 && used == 0)
+        return;
     if (cur == used)
     {
         cout << "Can't move next" << endl;
