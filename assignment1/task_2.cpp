@@ -1,5 +1,5 @@
 #include <iostream>
-#include "arr.h"
+#include "ll.h"
 using namespace std;
 
 LL<int> list;
@@ -20,7 +20,7 @@ void append(int item)
     }
 
     int cpos = list.currPos();
-    list.moveToEnd();
+    list.moveToPos(list.length());
     list.insert(item);
     list.moveToPos(cpos);
 }
