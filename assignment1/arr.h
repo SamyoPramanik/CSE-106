@@ -38,7 +38,7 @@ void LL<x>::insert(int item)
         ara = (int *)realloc(ara, 2 * capacity * sizeof(int));
         capacity *= 2;
     }
-    for (int i = used + 1; i > cur; i--)
+    for (int i = used; i > cur; i--)
         ara[i] = ara[i - 1];
     ara[cur] = item;
     used++;
@@ -60,7 +60,7 @@ x LL<x>::remove()
     }
 
     int ret = ara[cur];
-    for (int i = cur; i < used; i++)
+    for (int i = cur; i < used - 1; i++)
         ara[i] = ara[i + 1];
     used--;
     return ret;
