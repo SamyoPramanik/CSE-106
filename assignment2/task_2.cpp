@@ -7,6 +7,8 @@
 using namespace std;
 
 char expression[1000];
+char test[1000];
+
 stack<char> op;
 stack<double> operand;
 
@@ -62,20 +64,20 @@ void calculate()
 double evaluate(char *expression)
 {
 
-    for (int i = 0; i < strlen(expression); i++)
+    for (int i = 0; i < strlen(test); i++)
     {
-        char c = expression[i];
+        char c = test[i];
         if (c == ' ')
             continue;
-        if ((i == 0 && c == '-') || (c == '-' && isOperator(expression[i - 1])) || isdigit(c) || c == '.')
+        if ((i == 0 && c == '-') || (c == '-' && isOperator(test[i - 1])) || isdigit(c) || c == '.')
         {
             char number[100];
             int j = 0;
             number[j++] = c;
             i++;
 
-            while (isdigit(expression[i]) || expression[i] == '.')
-                number[j++] = expression[i++];
+            while (isdigit(test[i]) || test[i] == '.')
+                number[j++] = test[i++];
             i--;
             number[j] = '\0';
 
@@ -116,7 +118,6 @@ double evaluate(char *expression)
 
 bool checkValidity()
 {
-    char test[1000];
     int j = 0;
     for (int i = 0; i < strlen(expression); i++)
     {
