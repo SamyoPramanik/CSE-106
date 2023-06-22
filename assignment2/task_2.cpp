@@ -25,6 +25,11 @@ bool isOperator(char c)
     return c == '+' || c == '-' || c == '*' || c == '/' || c == '(';
 }
 
+bool isOperator2(char c)
+{
+    return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')';
+}
+
 void calculate()
 {
     char c = op.topvalue();
@@ -44,8 +49,12 @@ void calculate()
         result = a * b;
 
     if (c == '/')
-        result = a / b;
-
+    {
+        if (b == 0)
+            result = -93049049320;
+        else
+            result = a / b;
+    }
     op.pop();
     operand.push(result);
 }
@@ -105,23 +114,72 @@ double evaluate(char *expression)
     return operand.topvalue();
 }
 
-// bool checkValidity()
-// {
-//     char test[1000];
-//     int j = 0;
-//     for (int i = 0; i < strlen(expression); i++)
-//     {
-//         if (expression[i] == ' ')
-//             continue;
-//         else
-//             test[j++] = expression[i];
-//     }
-//     test[j] = '\0';
-// }
+bool checkValidity()
+{
+    char test[1000];
+    int j = 0;
+    for (int i = 0; i < strlen(expression); i++)
+    {
+        if (expression[i] == ' ')
+            continue;
+        else
+            test[j++] = expression[i];
+    }
+    test[j] = '\0';
+    int l = strlen(test);
+
+    if (test[0] == ')' || test[0] == '+' || test[0] == '*' || test[0] == '/')
+        return false;
+    if (isOperator(test[l - 1]))
+        return false;
+
+    stack<char> bracket;
+    for (int i = 0; i < l; i++)
+    {
+        if (test[i] == '(')
+            bracket.push('(');
+        else if (test[i] == ')')
+        {
+            if (bracket.isEmpty())
+                return false;
+            else
+                bracket.pop();
+        }
+    }
+
+    if (!bracket.isEmpty())
+        return false;
+
+    for (int i = 1; i < l - 1; i++)
+    {
+        if (test[i] == '+' || test[i] == '*' || test[i] == '/')
+        {
+            if ((test[i - 1] == ')' || isdigit(test[i - 1])) && (test[i + 1] == '(' || isdigit(test[i + 1]) || test[i + 1] == '-'))
+                continue;
+            else
+                return false;
+        }
+
+        else if (test[i] == '-')
+        {
+            if ((isOperator2(test[i - 1] || isdigit(test[i - 1]))) && test[i + 1] == '(' || test[i + 1] == '-' || isdigit(test[i + 1]))
+                continue;
+            else
+                return false;
+        }
+    }
+
+    return true;
+}
 
 int main()
 {
     cin.getline(expression, 1000);
+    if (!checkValidity())
+    {
+        cout << "invalid expression" << endl;
+        return 0;
+    }
     double ans = evaluate(expression);
     cout << ans << endl;
 }
