@@ -54,10 +54,23 @@ void initialize()
             test[j++] = '*';
         }
 
-        else if (test1[i] == '-')
+        else if (test1[i] == '-' && test[i + 1] == '(')
         {
             test[j++] = '-';
             test[j++] = '1';
+            test[j++] = '*';
+        }
+
+        else if (i > 0 && test1[i] == '-' && test1[i - 1] != '/')
+        {
+            test[j++] = '-';
+            test[j++] = '1';
+            test[j++] = '*';
+        }
+
+        else if (isdigit(test1[i]) && test1[i + 1] == '(')
+        {
+            test[j++] = test[i];
             test[j++] = '*';
         }
 
@@ -103,8 +116,11 @@ void calculate()
 
 double evaluate(char *expression)
 {
-    op.clear();
-    operand.clear();
+    while (op.length())
+        op.pop();
+
+    while (operand.length())
+        operand.pop();
 
     for (int i = 0; i < strlen(test); i++)
     {
@@ -133,6 +149,7 @@ double evaluate(char *expression)
 
         else if (c == ')')
         {
+
             while (op.topvalue() != '(')
             {
                 calculate();
@@ -155,7 +172,11 @@ double evaluate(char *expression)
     {
         calculate();
     }
-    return operand.topvalue();
+
+    if (operand.length())
+        return operand.topvalue();
+    else
+        return 0;
 }
 
 bool checkValidity()
@@ -185,6 +206,13 @@ bool checkValidity()
     if (!bracket.isEmpty())
         return false;
 
+    for (int i = 0; i < l - 1; i++)
+    {
+
+        if (test[i] == '(' && test[i + 1] == ')')
+            return false;
+    }
+
     for (int i = 1; i < l - 1; i++)
     {
         if (test[i] == '+' || test[i] == '*' || test[i] == '/')
@@ -209,17 +237,27 @@ bool checkValidity()
 
 int main()
 {
+    //     freopen("combination.txt", "r", stdin);
+    //     freopen("out.txt", "w", stdout);
     while (true)
     {
         cin.getline(expression, 1000);
-        if (!checkValidity())
+
+        if (strcmp(expression, "exit") == 0)
+            break;
+
+        else if (!checkValidity())
         {
-            cout << "invalid expression" << endl;
+            // cout << expression << endl;
+            // cout << "invalid expression" << endl;
         }
+
         else
         {
+            cout << expression << endl;
+
             double ans = evaluate(expression);
-            cout << ans << endl;
+            cout << "ans = " << ans << endl;
         }
     }
 }
