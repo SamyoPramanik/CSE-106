@@ -32,6 +32,41 @@ bool isOperator2(char c)
     return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')';
 }
 
+void initialize()
+{
+    int j = 0;
+    char test1[1000];
+    for (int i = 0; i < strlen(expression); i++)
+    {
+        if (expression[i] == ' ')
+            continue;
+        else
+            test1[j++] = expression[i];
+    }
+    test1[j] = '\0';
+
+    j = 0;
+    for (int i = 0; i < strlen(test1); i++)
+    {
+        if (test1[i] == ')' && test1[i + 1] == '(')
+        {
+            test[j++] = ')';
+            test[j++] = '*';
+        }
+
+        else if (test1[i] == '-')
+        {
+            test[j++] = '-';
+            test[j++] = '1';
+            test[j++] = '*';
+        }
+
+        else
+            test[j++] = test1[i];
+    }
+    test[j] = '\0';
+}
+
 void calculate()
 {
     char c = op.top();
@@ -128,15 +163,7 @@ double evaluate(char *expression)
 
 bool checkValidity()
 {
-    int j = 0;
-    for (int i = 0; i < strlen(expression); i++)
-    {
-        if (expression[i] == ' ')
-            continue;
-        else
-            test[j++] = expression[i];
-    }
-    test[j] = '\0';
+    initialize();
     int l = strlen(test);
 
     if (test[0] == ')' || test[0] == '+' || test[0] == '*' || test[0] == '/')
