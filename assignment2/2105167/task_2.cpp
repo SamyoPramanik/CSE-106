@@ -54,14 +54,27 @@ void initialize()
             test[j++] = '*';
         }
 
-        else if (test1[i] == '-' && test[i + 1] == '(')
+        else if (j > 0 && test1[i] == '-' && test[j - 1] == '-')
         {
-            test[j++] = '-';
-            test[j++] = '1';
-            test[j++] = '*';
+            test[j - 1] = '+';
         }
 
-        else if (i > 0 && test1[i] == '-' && test1[i - 1] != '/')
+        else if (j > 0 && test1[i] == '-' && test[j - 1] == '+')
+        {
+            test[j - 1] = '-';
+        }
+
+        else if (j > 0 && test1[i] == '+' && test[j - 1] == '-')
+        {
+            test[j - 1] = '-';
+        }
+
+        else if (j > 0 && test1[i] == '+' && test[j - 1] == '+')
+        {
+            test[j - 1] = '+';
+        }
+
+        else if (i > 0 && test1[i] == '-' && test1[i + 1] == '(' && test1[i - 1] != '/')
         {
             test[j++] = '-';
             test[j++] = '1';
@@ -70,7 +83,7 @@ void initialize()
 
         else if (isdigit(test1[i]) && test1[i + 1] == '(')
         {
-            test[j++] = test[i];
+            test[j++] = test1[i];
             test[j++] = '*';
         }
 
@@ -223,6 +236,9 @@ bool checkValidity()
                 return false;
         }
 
+        else if (test[i] == ')' && isdigit(test[i + 1]))
+            return false;
+
         else if (test[i] == '-')
         {
             if ((isOperator2(test[i - 1]) || isdigit(test[i - 1])) && (test[i + 1] == '(' || test[i + 1] == '-' || isdigit(test[i + 1])))
@@ -237,8 +253,6 @@ bool checkValidity()
 
 int main()
 {
-    //     freopen("combination.txt", "r", stdin);
-    //     freopen("out.txt", "w", stdout);
     while (true)
     {
         cin.getline(expression, 1000);
@@ -248,14 +262,11 @@ int main()
 
         else if (!checkValidity())
         {
-            // cout << expression << endl;
-            // cout << "invalid expression" << endl;
+            cout << "invalid expression" << endl;
         }
 
         else
         {
-            cout << expression << endl;
-
             double ans = evaluate(expression);
             cout << "ans = " << ans << endl;
         }
